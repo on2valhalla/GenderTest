@@ -1,24 +1,20 @@
 # all the imports
 from __future__ import with_statement
 import sqlite3
-from flask import Flask, request, session, g, redirect, url_for, \
-	 abort, render_template, flash
 from contextlib import closing
+from flask import Flask, request, session, g, redirect, url_for, \
+	abort, render_template, flash
 
-# configuration
-DATABASE = '/tmp/genderapp.db'
-DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
-
+###############################################################################
+# GLOBAL Config
 
 # create our little application :)
 app = Flask(__name__)
+# pulls all capitalized variables from this file as config
 app.config.from_object(__name__)
-app.config.from_envvar('GENDERTEST_SETTINGS', silent=True)
-
-
+# allows for specification of a config file other than default
+app.config.from_envvar('GT_SETTINGS', silent=True)
+###############################################################################
 
 
 ###############################################################################
@@ -32,9 +28,19 @@ def init_db():
 		with app.open_resource('schema.sql') as f:
 			db.cursor().executescript(f.read())
 		db.commit()
+
+@app.before_request
+def before_request():
+    g.db = connect_db()
+
+@app.teardown_request
+def teardown_request(exception):
+    g.db.close()
 ###############################################################################
 
 
+###############################################################################
+# APP CODE
 
 
 if __name__ == '__main__':

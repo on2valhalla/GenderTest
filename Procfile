@@ -1,2 +1,2 @@
-web: python genderapp.py
+web: python gendertest.py
 

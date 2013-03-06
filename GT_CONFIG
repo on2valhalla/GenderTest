@@ -1,0 +1,8 @@
+# DATABASE CONFIG FILE
+
+# configuration
+DATABASE = '/tmp/gendertest.db'
+DEBUG = True
+SECRET_KEY = 'development key'
+USERNAME = 'admin'
+PASSWORD = 'default'
