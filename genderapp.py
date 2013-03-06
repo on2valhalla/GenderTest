@@ -1,13 +1,24 @@
-import os
-from flask import Flask
+# all the imports
+import sqlite3
+from flask import Flask, request, session, g, redirect, url_for, \
+	 abort, render_template, flash
 
+# configuration
+DATABASE = '/tmp/genderapp.db'
+DEBUG = True
+SECRET_KEY = 'development key'
+USERNAME = 'admin'
+PASSWORD = 'default'
+
+
+# create our little application :)
 app = Flask(__name__)
+app.config.from_object(__name__)
+app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-@app.route('/')
-def hello():
-	return 'Hello World!'
+def connect_db():
+	return sqlite3.connect(app.config['DATABASE'])
+
 
 if __name__ == '__main__':
-	# Bind to PORT if defined, otherwise default to 5000
-	port = int(os.environ.get('PORT', 5000))
-	app.run(host='0.0.0.0', port=port)
+	app.run()
