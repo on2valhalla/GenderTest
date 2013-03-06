@@ -44,4 +44,8 @@ def teardown_request(exception):
 
 
 if __name__ == '__main__':
-	app.run()
+	# must get the port number from heroku
+	# environment variable and look for all open
+	# connections
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
