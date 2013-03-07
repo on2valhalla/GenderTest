@@ -1,13 +1,19 @@
 # all the imports
 from __future__ import with_statement
-import sqlite3
 from contextlib import closing
 from flask import Flask, request, session, g, redirect, url_for, \
 	abort, render_template, flash
 import os
 
+
+from flask_sqlalchemy import SQLAlchemy
+
+
+
 ###############################################################################
 # GLOBAL Config
+
+DATABASE_URL = os.environ['DATABASE_URL']
 
 # create our little application :)
 app = Flask(__name__)
@@ -15,36 +21,38 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 # allows for specification of a config file other than default
 app.config.from_envvar('GT_SETTINGS', silent=True)
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+db = SQLAlchemy(app)
 ###############################################################################
 
 
+
+
+
 ###############################################################################
-# DATABASE FUNCTIONS
+# DATABASE STUFF
+class Participant(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	age = db.Column(db.Integer)
+	gender = db.Column(db.String(120))
+	nativeLanguage = db.Column(db.String(120))
+	otherLanguages = db.Column(db.String(120))
+	yearsEnglish = db.Column(db.Integer)
+	yearsEngCountry = db.Column(db.Integer)
 
-def connect_db():
-	return sqlite3.connect(app.config['DATABASE_URL'])
+	def __init__(self, 
+			age, gender, nativeLanguage, otherLanguages,
+			yearsEnglish, yearsEngCountry):
+		self.age = age
+		self.gender = gender
+		self.nativeLanguage = nativeLanguage
+		self.otherLanguages = otherLanguages
+		self.yearsEnglish = yearsEnglish
+		self.yearsEngCountry = yearsEngCountry
 
-def init_db():
-	with closing(connect_db()) as db:
-		with app.open_resource('schema.sql') as f:
-			db.cursor().executescript(f.read())
-		db.commit()
+	def __repr__(self):
+		return '<Participant %r>' % self.nativeLanguage
 
-@app.before_request
-def before_request():
-	g.db = connect_db()
-
-@app.teardown_request
-def teardown_request(exception):
-	g.db.close()
-
-def query_db(query, args=(), one=False):
-	cur = g.db.execute(query, args)
-	rv = [dict((cur.description[idx][0], value)
-			for idx, value in enumerate(row))
-			 for row in cur.fetchall()]
-
-	return (rv[0] if rv else None) if one else rv
 ###############################################################################
 
 
@@ -52,24 +60,7 @@ def query_db(query, args=(), one=False):
 # APP CODE
 @app.route('/')
 def show_participants():
-	cur = g.db.execute('select \
-			user_id, \
-			age, \
-			gender, \
-			nat_lang, \
-			oth_lang, \
-			years_eng, \
-			years_eng_cnt \
-			from participants order by r_id desc')
-	participants = [dict( \
-			user_id=row[0], \
-			age=row[1], \
-			gender=row[2], \
-			nat_lang=row[3], \
-			oth_lang=row[4], \
-			years_eng=row[5], \
-			years_eng_cnt=row[6]) \
-			for row in cur.fetchall()]
+	participants = Participant.query.all()
 	return render_template('show_participants.html', participants=participants)
 
 
@@ -119,10 +110,6 @@ def logout():
 	return redirect(url_for('show_participants'))
 
 ###############################################################################
-
-
-
-
 
 
 

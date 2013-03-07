@@ -14,19 +14,19 @@
           </tr>
           <tr>
             <td>Native Language:</td>
-            <td><input type=text size=30 name=nat_lang></td>
+            <td><input type=text size=30 name=nativeLanguage></td>
           </tr>
           <tr>
             <td>Other Languages:</td>
-            <td><input type=text size=30 name=oth_lang></td>
+            <td><input type=text size=30 name=otherLanguages></td>
           </tr>
           <tr>
             <td>Years Speaking English</td>
-            <td><input type=text size=30 name=years_eng></td>
+            <td><input type=text size=30 name=yearsEnglish></td>
           </tr>
           <tr>
             <td>Years Living in an English Speaking Country:</td>
-            <td><input type=text size=30 name=years_eng_cnt></td>
+            <td><input type=text size=30 name=yearsEngCountry></td>
           </tr>
         </table>
         <dd><input type=submit value=Continue>
@@ -46,13 +46,13 @@
     </tr>
   {% for participant in participants %}
     <tr>
-      <td>{{ participant.user_id|safe }}</td>
+      <td>{{ participant.id|safe }}</td>
       <td>{{ participant.age|safe }}</td>
       <td>{{ participant.gender|safe }}</td>
-      <td>{{ participant.nat_lang|safe }}</td>
-      <td>{{ participant.oth_lang|safe }}</td>
-      <td>{{ participant.years_eng|safe }}</td>
-      <td>{{ participant.years_eng_cnt|safe }}</td>
+      <td>{{ participant.nativeLanguage|safe }}</td>
+      <td>{{ participant.otherLanguages|safe }}</td>
+      <td>{{ participant.yearsEnglish|safe }}</td>
+      <td>{{ participant.yearsEngCountry|safe }}</td>
     </tr>
   {% else %}
     <h2><em>Unbelievable.  No participants here so far</em></h2>
