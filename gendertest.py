@@ -22,7 +22,7 @@ app.config.from_envvar('GT_SETTINGS', silent=True)
 # DATABASE FUNCTIONS
 
 def connect_db():
-	return sqlite3.connect(app.config['DATABASE'])
+	return sqlite3.connect(app.config['DATABASE_URL'])
 
 def init_db():
 	with closing(connect_db()) as db:
