@@ -3,28 +3,50 @@
   {% if session.logged_in %}
     <form action="{{ url_for('add_participant') }}" method=post class=add-participant>
       <dl>
-        <dt>Age:
-        <dd><input type=text size=30 name=age>
-        <dt>Gender:
-        <dd><input type=text size=30 name=gender>
-        <dt>Native Language:
-        <dd><input type=text size=30 name=nat_lang>
-        <dt>Other Languages:
-        <dd><input type=text size=30 name=oth_lang>
-        <dt>Years Speaking English
-        <dd><input type=text size=30 name=years_eng>
-        <dt>Years Living in an English Speaking Country:
-        <dd><input type=text size=30 name=years_eng_cnt>
-        <dt>Text:
-        <dd><textarea name=text rows=5 cols=40></textarea>
-        <dd><input type=submit value=Share>
+        <table>
+          <tr>
+            <td>Age:</td>
+            <td><input type=text size=30 name=age></td>
+          </tr>
+          <tr>
+            <td>Gender:</td>
+            <td><input type=text size=30 name=gender></td>
+          </tr>
+          <tr>
+            <td>Native Language:</td>
+            <td><input type=text size=30 name=nat_lang></td>
+          </tr>
+          <tr>
+            <td>Other Languages:</td>
+            <td><input type=text size=30 name=oth_lang></td>
+          </tr>
+          <tr>
+            <td>Years Speaking English</td>
+            <td><input type=text size=30 name=years_eng></td>
+          </tr>
+          <tr>
+            <td>Years Living in an English Speaking Country:</td>
+            <td><input type=text size=30 name=years_eng_cnt></td>
+          </tr>
+        </table>
+        <dd><input type=submit value=Continue>
       </dl>
     </form>
   {% endif %}
   <ul class=participants>
   <table border="1">
+    <tr>
+      <td><b>User ID</td>
+      <td><b>Age</td>
+      <td><b>Gender</td>
+      <td><b>Native Language</td>
+      <td><b>Other Langauges</td>
+      <td><b>Years Speaking English</td>
+      <td><b>Years Living in English Speaking Country</td>
+    </tr>
   {% for participant in participants %}
     <tr>
+      <td>{{ participant.user_id|safe }}</td>
       <td>{{ participant.age|safe }}</td>
       <td>{{ participant.gender|safe }}</td>
       <td>{{ participant.nat_lang|safe }}</td>
