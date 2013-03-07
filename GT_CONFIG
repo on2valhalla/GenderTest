@@ -2,6 +2,7 @@
 
 # configuration
 DEBUG = True
+DATABASE_URL = postgres://sijtlmplwhwgtc:aBHQYX-ORzMgmEH3pvKVcmcXJ-@ec2-23-21-161-153.compute-1.amazonaws.com:5432/d359gqia054bek
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
