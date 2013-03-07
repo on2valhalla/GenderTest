@@ -52,45 +52,71 @@ def query_db(query, args=(), one=False):
 # APP CODE
 @app.route('/')
 def show_participants():
-	cur = g.db.execute('select  \
-			age, gender, nat_lang, oth_lang, years_eng, years_lived \
-			from entries order by p_id desc')
-	entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-	return render_template('show_participants.html', entries=entries)
+	cur = g.db.execute('select \
+			user_id, \
+			age, \
+			gender, \
+			nat_lang, \
+			oth_lang, \
+			years_eng, \
+			years_eng_cnt \
+			from participants order by r_id desc')
+	participants = [dict( \
+			user_id=row[0], \
+			age=row[1], \
+			gender=row[2], \
+			nat_lang=row[3], \
+			oth_lang=row[4], \
+			years_eng=row[5], \
+			years_eng_cnt=row[6]) \
+			for row in cur.fetchall()]
+	return render_template('show_participants.html', participants=participants)
+
 
 @app.route('/add_participant', methods=['POST'])
 def add_participant():
 	if not session.get('logged_in'):
 		abort(401)
-	g.db.execute('insert into entries \
-			(age, gender, nat_lang, oth_lang, years_eng, years_lived) \
-			values (?, ?)', [request.form['age'], request.form['gender'], \
-			request.form['nat_lang'], request.form['oth_lang'] \
-			request.form['years_eng'], request.form['years_lived']])
+	g.db.execute('insert into participants \
+			(user_id, age, gender, nat_lang, oth_lang, years_eng, years_eng_cnt) \
+			values (?, ?, ?, ?, ?, ?, ?)', \
+			[session['user_id'], \
+			request.form['age'], \
+			request.form['gender'], \
+			request.form['nat_lang'], \
+			request.form['oth_lang'], \
+			request.form['years_eng'], \
+			request.form['years_eng_cnt']])
 	g.db.commit()
 
-	flash('New entry was successfully posted')
+	flash('New participant was successfully posted')
 	return redirect(url_for('show_participants'))
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid password'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_participants'))
-    return render_template('login.html', error=error)
+	error = None
+	if request.method == 'POST':
+		user_id = request.form['user_id']
+		user = query_db('select * from participants where user_id=?',
+                [user_id], one=True)
+		if user is None:
+			session['logged_in'] = True
+			session['user_id'] = user_id
+			flash('You were logged in')
+			return redirect(url_for('show_participants'))
+		else:
+		    error = str(user['user_id']) + \
+		    ' is already taken, contact an administrator.'
+
+	return render_template('login.html', error=error)
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out')
-    return redirect(url_for('show_participants'))
+	session.pop('logged_in', None)
+	flash('You were logged out')
+	return redirect(url_for('show_participants'))
 
 ###############################################################################
 

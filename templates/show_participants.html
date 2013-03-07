@@ -1,21 +1,40 @@
 {% extends "layout.html" %}
 {% block body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+    <form action="{{ url_for('add_participant') }}" method=post class=add-participant>
       <dl>
-        <dt>Title:
-        <dd><input type=text size=30 name=title>
+        <dt>Age:
+        <dd><input type=text size=30 name=age>
+        <dt>Gender:
+        <dd><input type=text size=30 name=gender>
+        <dt>Native Language:
+        <dd><input type=text size=30 name=nat_lang>
+        <dt>Other Languages:
+        <dd><input type=text size=30 name=oth_lang>
+        <dt>Years Speaking English
+        <dd><input type=text size=30 name=years_eng>
+        <dt>Years Living in an English Speaking Country:
+        <dd><input type=text size=30 name=years_eng_cnt>
         <dt>Text:
         <dd><textarea name=text rows=5 cols=40></textarea>
         <dd><input type=submit value=Share>
       </dl>
     </form>
   {% endif %}
-  <ul class=entries>
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
+  <ul class=participants>
+  <table border="1">
+  {% for participant in participants %}
+    <tr>
+      <td>{{ participant.age|safe }}</td>
+      <td>{{ participant.gender|safe }}</td>
+      <td>{{ participant.nat_lang|safe }}</td>
+      <td>{{ participant.oth_lang|safe }}</td>
+      <td>{{ participant.years_eng|safe }}</td>
+      <td>{{ participant.years_eng_cnt|safe }}</td>
+    </tr>
   {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
+    <h2><em>Unbelievable.  No participants here so far</em></h2>
   {% endfor %}
+  </table>
   </ul>
 {% endblock %}
