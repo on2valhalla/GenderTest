@@ -1,7 +1,6 @@
 # DATABASE CONFIG FILE
 
 # configuration
-DATABASE = HEROKU_POSTGRESQL_MAROON_URL
 DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
