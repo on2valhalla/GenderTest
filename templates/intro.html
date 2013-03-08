@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h2>Welcome!</h2>
+  	<br>Thank you for participating in our study. 
+	<br>During this task you will see pairs of pictures on the screen
+	<br>Please rate the pictures on how intuitively similar you think the two things are
+	<br>You will see a scale where 1=not similar and 9=very similar.
+	<br>For each pair of pictures please use this scale to indicate how similar these objects are.
+	<br>Please use the whole scale (give some 1’s and some 9’s and some of all the numbers in between).
+	<br>At the end of the task you will be asked to fill out a short survey. Please click “Begin” to start the study.
+	<br><br><a href="{{ url_for('collect_ans') }}">Begin</a>
+{% endblock %}

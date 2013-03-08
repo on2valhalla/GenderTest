@@ -1,0 +1,28 @@
+<!doctype html>
+<title>Gender Test</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+<div class=page>
+	<form action="{{ url_for('collect_ans') }}" method=post>
+<!-- 		{{pictureTup}}
+ -->		<table id="imgtbl">
+			<tr>
+				<td class="cell"><img class="img" src={{ imgName1 }} alt={{ imgName1 }}>
+				<td class="cell"><img class="img" src={{ imgName2 }} alt={{ imgName2 }}>
+			</tr>
+		</table>
+		<table id="btns">
+			<tr>
+				<td><input id="data" type=submit name=btn value=1>
+				<td><input id="data" type=submit name=btn value=2>
+				<td><input id="data" type=submit name=btn value=3>
+				<td><input id="data" type=submit name=btn value=4>
+				<td><input id="data" type=submit name=btn value=5>
+				<td><input id="data" type=submit name=btn value=6>
+				<td><input id="data" type=submit name=btn value=7>
+				<td><input id="data" type=submit name=btn value=8>
+				<td><input id="data" type=submit name=btn value=9>
+			</tr>
+		</table>
+	</form>
+</div>

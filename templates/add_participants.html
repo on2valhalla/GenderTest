@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block body %}
+<form action="{{ url_for('add_participant') }}" method=post class=add-participant>
+  <dl>
+    <table>
+      <tr>
+        <td>Age:</td>
+        <td><input required type=text size=30 name=age></td>
+      </tr>
+      <tr>
+        <td>Gender:</td>
+        <td><input required type=text size=30 name=gender></td>
+      </tr>
+      <tr>
+        <td>Native Language:</td>
+        <td><input required type=text size=30 name=nativeLanguage></td>
+      </tr>
+      <tr>
+        <td>Other Languages:</td>
+        <td><input required type=text size=30 name=otherLanguages></td>
+      </tr>
+      <tr>
+        <td>Years Speaking English</td>
+        <td><input required type=text size=30 name=yearsEnglish></td>
+      </tr>
+      <tr>
+        <td>Years Living in an English Speaking Country:</td>
+        <td><input required type=text size=30 name=yearsEngCountry></td>
+      </tr>
+    </table>
+    <dd><input type=submit value=Continue>
+  </dl>
+</form>
+{% endblock %}
