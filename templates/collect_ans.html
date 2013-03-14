@@ -2,15 +2,16 @@
 <title>Gender Test</title>
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
-<div class=page>
+
+<div class="page">
 	<form action="{{ url_for('collect_ans') }}" method=post>
 <!-- 		{{pictureTup}}
- -->		<table id="imgtbl">
-			<tr>
-				<td class="cell"><img class="img" src={{ imgName1 }} alt={{ imgName1 }}>
-				<td class="cell"><img class="img" src={{ imgName2 }} alt={{ imgName2 }}>
-			</tr>
-		</table>
+-->	
+		<div id="content">
+			<div id="left"><img id="img1" src={{ imgName1 }} alt={{ imgName1 }}> </div>
+			<div id="right"><img id="img2" src={{ imgName2 }} alt={{ imgName2 }}></div>
+			<div id="clear"></div>
+		</div>
 		<table id="btns">
 			<tr>
 				<td><input id="data" type=submit name=btn value=1>
