@@ -6,9 +6,14 @@
         <td><b>User ID</td>
         <td><b>Age</td>
         <td><b>Gender</td>
-        <td><b>Native Language</td>
-        <td><b>Other Langauges</td>
-        <td><b>Years Speaking English</td>
+        <td><b>Language 1</td>
+        <td><b>Years Speaking Lang 1</td>
+        <td><b>Language 2</td>
+        <td><b>Years Speaking Lang 2</td>
+        <td><b>Language 3</td>
+        <td><b>Years Speaking Lang 3</td>
+        <td><b>Language 4</td>
+        <td><b>Years Speaking Lang 4</td>
         <td><b>Years Living in English Speaking Country</td>
         {% for i in range(1,numPics+1) %}
           <td><b>Set {{i}}</td>
@@ -19,9 +24,14 @@
         <td>{{ participant.pID|safe }}</td>
         <td>{{ participant.age|safe }}</td>
         <td>{{ participant.gender|safe }}</td>
-        <td>{{ participant.nativeLanguage|safe }}</td>
-        <td>{{ participant.otherLanguages|safe }}</td>
-        <td>{{ participant.yearsEnglish|safe }}</td>
+        <td>{{ participant.language1|safe }}</td>
+        <td>{{ participant.yrLanguage1|safe }}</td>
+        <td>{{ participant.language2|safe }}</td>
+        <td>{{ participant.yrLanguage2|safe }}</td>
+        <td>{{ participant.language3|safe }}</td>
+        <td>{{ participant.yrLanguage3|safe }}</td>
+        <td>{{ participant.language4|safe }}</td>
+        <td>{{ participant.yrLanguage4|safe }}</td>
         <td>{{ participant.yearsEngCountry|safe }}</td>
         {% for answer in participant.answers %}
           <td>{{ answer.ans |safe }}</td>

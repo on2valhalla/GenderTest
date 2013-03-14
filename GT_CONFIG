@@ -5,4 +5,4 @@ DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
-NUMPICS = 32
+NUMPICS = 36

@@ -21,6 +21,7 @@ app.config.from_object(__name__)
 # allows for specification of a config file other than default
 app.config.from_envvar('GT_SETTINGS', silent=True)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+app.debug = True
 db = SQLAlchemy(app)
 
 ###############################################################################
@@ -36,23 +37,36 @@ class Participant(db.Model):
 	pID = db.Column(db.String(120))
 	age = db.Column(db.String(120))
 	gender = db.Column(db.String(120))
-	nativeLanguage = db.Column(db.String(120))
-	otherLanguages = db.Column(db.String(120))
-	yearsEnglish = db.Column(db.String(120))
+	language1 = db.Column(db.String(120))
+	language2 = db.Column(db.String(120))
+	language3 = db.Column(db.String(120))
+	language4 = db.Column(db.String(120))
+	yrLanguage1 = db.Column(db.String(120))
+	yrLanguage2 = db.Column(db.String(120))
+	yrLanguage3 = db.Column(db.String(120))
+	yrLanguage4 = db.Column(db.String(120))
 	yearsEngCountry = db.Column(db.String(120))
 	answers = db.relationship("Answer", order_by="Answer.setNum", \
 								backref="Participant")
 
 	def __init__(self,
 			pID, age='', gender='', 
-			nativeLanguage='', otherLanguages='',
-			yearsEnglish='', yearsEngCountry=''):
+			language1='', yrLanguage1='',
+			language2='', yrLanguage2='',
+			language3='', yrLanguage3='',
+			language4='', yrLanguage4='',
+			yearsEngCountry=''):
 		self.pID = pID
 		self.age = age
 		self.gender = gender
-		self.nativeLanguage = nativeLanguage
-		self.otherLanguages = otherLanguages
-		self.yearsEnglish = yearsEnglish
+		self.language1 = language1
+		self.yrLanguage1 = yrLanguage1
+		self.language2 = language2
+		self.yrLanguage2 = yrLanguage2
+		self.language3 = language3
+		self.yrLanguage3 = yrLanguage3
+		self.language4 = language4
+		self.yrLanguage4 = yrLanguage4
 		self.yearsEngCountry = yearsEngCountry
 
 	def __repr__(self):
@@ -158,17 +172,25 @@ def add_participant():
 		p = db.session.query(Participant).filter_by(pID=pID).first()
 		p.age = inDict['age']
 		p.gender = inDict['gender']
-		p.nativeLanguage = inDict['nativeLanguage']
-		p.otherLanguages = inDict['otherLanguages']
-		p.yearsEnglish = inDict['yearsEnglish']
+		p.language1 = inDict['language1']
+		p.yrLanguage1 = inDict['yrLanguage1']
+		p.language2 = inDict['language2']
+		p.yrLanguage2 = inDict['yrLanguage2']
+		p.language3 = inDict['language3']
+		p.yrLanguage3 = inDict['yrLanguage3']
+		p.language4 = inDict['language4']
+		p.yrLanguage4 = inDict['yrLanguage4']
 		p.yearsEngCountry =  inDict['yearsEngCountry']
 		db.session.commit()
 
 		flash('New participant was successfully posted')
-		return redirect(url_for('logout'))
+		return redirect(url_for('thanks'))
 	else:
 		return render_template('add_participants.html')
 
+@app.route('/thanks', methods=['GET','POST'])
+def thanks():
+	return render_template('thanks.html')
 
 
 @app.route('/admin_login', methods=['GET', 'POST'])
